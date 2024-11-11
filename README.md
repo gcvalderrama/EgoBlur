@@ -71,6 +71,9 @@ conda activate ego_blur
 
 ```
 python script/demo_ego_blur.py --face_model_path /home/${USER}/ego_blur_assets/ego_blur_face.jit --input_image_path demo_assets/test_image.jpg --output_image_path /home/${USER}/ego_blur_assets/test_image_output.jpg
+
+
+
 ```
 
 
@@ -96,6 +99,8 @@ python script/demo_ego_blur.py --lp_model_path /home/${USER}/ego_blur_assets/ego
 python script/demo_ego_blur.py --face_model_path /home/${USER}/ego_blur_assets/ego_blur_face.jit --lp_model_path /home/${USER}/ego_blur_assets/ego_blur_lp.jit --input_image_path /home/${USER}/ego_blur_assets/test_image.jpg --output_image_path /home/${USER}/ego_blur_assets/test_image_output.jpg  --input_video_path /home/${USER}/ego_blur_assets/test_video.mp4 --output_video_path /home/${USER}/ego_blur_assets/test_video_output.mp4 --face_model_score_threshold 0.9 --lp_model_score_threshold 0.9 --nms_iou_threshold 0.3 --scale_factor_detections 1 --output_video_fps 20
 ```
 
+python script/demo_ego_blur.py --face_model_path models/ego_blur_face.jit --input_image_path demo_assets/test_image.jpg --output_image_path outputs/test_image_output.jpg
+
 ## License
 
 The model is licensed under the [Apache 2.0 license](LICENSE).
@@ -118,3 +123,7 @@ If you use EgoBlur in your research, please use the following BibTeX entry.
       primaryClass={cs.CV}
 }
 ```
+
+pip install torch torchvision --index-url https://download.pytorch.org/whl/cu121
+
+python script/demo_ego_blur.py --face_model_path models/ego_blur_face.jit --input_video_path E:/aliceplace/C0298_video_green.mp4 --output_video_path E:/aliceplace/C0298_mask.mp4 --output_video_fps 29
