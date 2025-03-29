@@ -127,3 +127,7 @@ If you use EgoBlur in your research, please use the following BibTeX entry.
 pip install torch torchvision --index-url https://download.pytorch.org/whl/cu121
 
 python script/demo_ego_blur.py --face_model_path models/ego_blur_face.jit --input_video_path E:/aliceplace/C0298_video_green.mp4 --output_video_path E:/aliceplace/C0298_mask.mp4 --output_video_fps 29
+
+
+
+wget -O  wget -O ego_blur_face.jit 
