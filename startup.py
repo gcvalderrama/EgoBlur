@@ -343,7 +343,7 @@ def visualize(
             )
         x1, y1, x2, y2 = int(box[0]), int(box[1]), int(box[2]), int(box[3])
         
-        factor_inc = 20
+        factor_inc = 80
         if x1 - factor_inc > 0:
             x1 = x1 - factor_inc
         if y1 - factor_inc > 0:
@@ -355,7 +355,7 @@ def visualize(
         h = y2 - y1
 
         # Apply Gaussian Blur for an out-of-focus effect        
-        blurred_region = cv2.GaussianBlur(image_fg[y1:y2, x1:x2], (61, 61), sigmaX=30)
+        blurred_region = cv2.GaussianBlur(image_fg[y1:y2, x1:x2], (151, 151), sigmaX=155)
         
         # Replace the region in the foreground with the blurred version
         image_fg[y1:y2, x1:x2] = blurred_region
@@ -503,15 +503,14 @@ def visualize_video(
         video_writer_clip.close()
 
 if __name__ == '__main__':
-    device  = get_device()
-    print(device)
+    device  = get_device()    
+    logging.info(f"Device: {device}")
     args = validate_inputs(parse_args())        
     face_detector = torch.jit.load("models/ego_blur_face.jit", map_location="cpu").to(
         get_device()
     )
     face_detector.eval()    
     lp_detector = None
-
     logging.info("Starting detections...")
     logging.info(f"Face model score threshold: {args.face_model_score_threshold}")
     logging.info(f"License plate model score threshold: {args.lp_model_score_threshold}")
@@ -521,9 +520,14 @@ if __name__ == '__main__':
     logging.info(f"Ouput: {args.output_image_path }")
 
     if args.input_image_path:
-        image_files = glob.glob(os.path.join(args.input_image_path, "*.jpeg"))
+        image_files = []
+        for file in os.listdir(args.input_image_path):
+            if file.lower().endswith(".jpg") or file.lower().endswith(".png") or file.lower().endswith(".jpeg"):
+                image_files.append(os.path.join(args.input_image_path, file))
+        
+        logging.info(f"Input image files: {len(image_files)}")
         for image_file in image_files:
-            logging.info(f"Processing image: {image_file}")
+            logging.info(f"Ego Blur Process Image: {image_file}")
             visualize_image(
                 image_file,
                 face_detector,
@@ -534,3 +538,7 @@ if __name__ == '__main__':
                 os.path.join(args.output_image_path, os.path.basename(image_file)),
                 args.scale_factor_detections,
             )   
+    else:
+        raise ValueError(
+            f"Please provide either input_image_path"
+        )
